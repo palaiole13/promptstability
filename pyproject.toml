@@ -1,6 +1,28 @@
 [project]
-name = "placeholder"
+name = "promptstability"
 version = "0.1"
+description = "Package for generating Prompt Stability Scores (PSS). Useful for analysing the stability of outcomes resulting from variations in language model prompt specification"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [{name = "Elli Palaiologou"}]
+license = {text = "Apache-2.0"}
+classifiers = [
+    "License :: OSI Approved :: Apache Software License"
+]
+dependencies = [
+
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project.urls]
+Homepage = "https://github.com/palaiole13/promptstability"
+Changelog = "https://github.com/palaiole13/promptstability/releases"
+Issues = "https://github.com/palaiole13/promptstability/issues"
+CI = "https://github.com/palaiole13/promptstability/actions"
+
 
 [project.optional-dependencies]
 test = ["pytest"]
