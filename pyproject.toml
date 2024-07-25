@@ -1,28 +1,37 @@
-[project]
+[tool.poetry]
 name = "promptstability"
-version = "0.1"
-description = "Package for generating Prompt Stability Scores (PSS). Useful for analysing the stability of outcomes resulting from variations in language model prompt specification"
+version = "0.1.0"
+description = "Package for generating Prompt Stability Score (PSS) - aka exploring the stability of Language Model outcomes when exposed to prompt variations."
+authors = [
+  "Christopher Barrie",
+  "Elli Palaiologou",
+  "Petter Törnberg"
+  ]
+license = "Apache-2.0"
 readme = "README.md"
-requires-python = ">=3.8"
-authors = [{name = "Elli Palaiologou"}]
-license = {text = "Apache-2.0"}
+homepage = "https://github.com/palaiole13/promptstability"
+repository = "https://github.com/palaiole13/promptstability"
+documentation = "https://github.com/palaiole13/promptstability"
 classifiers = [
     "License :: OSI Approved :: Apache Software License"
 ]
-dependencies = [
 
-]
+[tool.poetry.dependencies]
+python = "^3.8"
+torch = "*"
+transformers = "*"
+sentence-transformers = "*"
+simpledorff = "*"
+pandas = "*"
+numpy = "*"
+seaborn = "*"
+matplotlib = "*"
+plotly = "*"
+sentencepiece = "*"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.5"
 
 [build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
-
-[project.urls]
-Homepage = "https://github.com/palaiole13/promptstability"
-Changelog = "https://github.com/palaiole13/promptstability/releases"
-Issues = "https://github.com/palaiole13/promptstability/issues"
-CI = "https://github.com/palaiole13/promptstability/actions"
-
-
-[project.optional-dependencies]
-test = ["pytest"]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
