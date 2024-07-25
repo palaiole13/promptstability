@@ -26,7 +26,6 @@ pandas = "*"
 numpy = "*"
 seaborn = "*"
 matplotlib = "*"
-plotly = "*"
 sentencepiece = "*"
 
 [tool.poetry.dev-dependencies]
