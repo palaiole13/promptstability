@@ -11,8 +11,7 @@ import os
 
 import seaborn as sns
 import matplotlib.pyplot as plt
-import plotly.express as px
-import plotly.graph_objects as go
+
 
 def get_openai_api_key():
     """Retrieve OpenAI API key from environment variables."""
