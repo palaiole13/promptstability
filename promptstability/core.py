@@ -110,7 +110,6 @@ class PromptStabilityAnalysis:
 
         return ka_scores, all_annotated
 
-
     def interprompt_stochasticity(self, original_text, prompt_postfix=None, nr_variations=5, temperatures=[0.5, 0.7, 0.9], iterations=1, bootstrap_samples=1000, print_prompts=False, edit_prompts_path=None, plot=False, save_path=None, save_csv=None):
         ka_scores = {}
         all_annotated = []
