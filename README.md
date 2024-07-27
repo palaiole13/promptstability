@@ -9,6 +9,13 @@ Package for generating Prompt Stability Scores (PSS). Useful for analysing the s
 
 ## Installation
 
+### TestPypi installation
+Install this library using `pip`:
+```bash
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple promptstability
+```
+
+### Pypi installation (pending upload)
 Install this library using `pip`:
 ```bash
 pip install promptstability
