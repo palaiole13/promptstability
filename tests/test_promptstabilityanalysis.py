@@ -19,7 +19,7 @@ def setup_analysis():
     analysis = PromptStabilityAnalysis(annotation_function=mock_annotation_function, data=data, metric_fn=lambda x: x)
     return analysis
 
-def test_baseline_stochasticity(setup_analysis):
+def test_intra_pss(setup_analysis):
     analysis = setup_analysis
     original_text = "Test text"
     prompt_postfix = "Test postfix"
@@ -27,7 +27,7 @@ def test_baseline_stochasticity(setup_analysis):
     bootstrap_samples = 10  # Reduce for testing purposes
 
     # Run the baseline_stochasticity method
-    ka_scores, annotated_data = analysis.baseline_stochasticity(original_text, prompt_postfix, iterations, bootstrap_samples)
+    ka_scores, annotated_data = analysis.intra_pss(original_text, prompt_postfix, iterations, bootstrap_samples)
 
     # Assertions
     assert isinstance(ka_scores, dict), "KA scores should be a dictionary"
