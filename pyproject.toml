@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "promptstability"
-version = "0.1.1"
+version = "0.1.2"
 description = "Package for generating Prompt Stability Score (PSS). PSS estimates the stability of outcomes resulting from variations in language model prompt specifications."
 authors = ["Christopher Barrie, Elli Palaiologou, Petter Törnberg"]
 license = "Apache-2.0"
@@ -11,12 +11,12 @@ documentation = "https://github.com/palaiole13/promptstability"
 classifiers = [
     "License :: OSI Approved :: Apache Software License"
 ]
+include = ["promptstability/data/example_data.csv"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
-torch = "*"
-transformers = "*"
-sentence-transformers = "*"
+python = ">=3.8,<=3.13"
+transformers = "^4.0.0" 
+sentence-transformers = "^2.2.0" 
 simpledorff = "*"
 pandas = "*"
 numpy = "*"
@@ -24,6 +24,7 @@ matplotlib = "*"
 seaborn = "*"
 openai = "^1.52.2"
 sentencepiece = "^0.2.0"
+torch = ">=1.11.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"

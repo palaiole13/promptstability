@@ -2,16 +2,19 @@ import torch
 from transformers import PegasusForConditionalGeneration, PegasusTokenizer, AutoModelForCausalLM, AutoTokenizer
 from sentence_transformers import SentenceTransformer, util
 import simpledorff
-
 import pandas as pd
 import numpy as np
 import time
 import sys
 import os
-
 import seaborn as sns
 import matplotlib.pyplot as plt
+import importlib.resources
 
+def load_example_data():
+    """Loads example data included with the package."""
+    with importlib.resources.open_text("promptstability.data", "example_data.csv") as f:
+        return pd.read_csv(f)
 
 def get_openai_api_key():
     """Retrieve OpenAI API key from environment variables."""
