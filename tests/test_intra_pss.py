@@ -2,6 +2,7 @@ import os
 import pandas as pd
 from promptstability.core import PromptStabilityAnalysis, get_openai_api_key
 from openai import OpenAI
+import pytest
 
 # Initialize OpenAI client
 client = OpenAI(api_key=get_openai_api_key())
@@ -35,6 +36,7 @@ test_data = [
 # Initialize PromptStabilityAnalysis with the test annotation function and data
 psa = PromptStabilityAnalysis(annotation_function=annotation_function, data=test_data)
 
+@pytest.mark.requires_api_key 
 def test_intra_pss():
     """Test the intra_pss function (within-prompt stability) with iterative CSV output."""
     original_text = "This is a prompt about the quick brown fox."

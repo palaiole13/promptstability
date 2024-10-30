@@ -1,11 +1,27 @@
-.venv
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-*$py.class
-venv
-.eggs
-.pytest_cache
-*.egg-info
-.DS_Store
-dist
-build
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Virtual environment directories
+env/
+venv/
+testenv/
+
+# Pytest cache
+.pytest_cache/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Environment variables file
+.env
+
+# IDE or editor directories and files
+.vscode/
+.idea/
+*.swp

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "promptstability"
-version = "0.1.47"
+version = "0.1.5"
 description = "Package for generating Prompt Stability Score (PSS). PSS estimates the stability of outcomes resulting from variations in language model prompt specifications."
 authors = ["Christopher Barrie, Elli Palaiologou, Petter Törnberg"]
 license = "Apache-2.0"
@@ -9,22 +9,28 @@ homepage = "https://github.com/palaiole13/promptstability"
 repository = "https://github.com/palaiole13/promptstability"
 documentation = "https://github.com/palaiole13/promptstability"
 classifiers = [
-    "License :: OSI Approved :: Apache Software License"
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3 :: Only",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
 ]
 include = ["promptstability/data/example_data.csv"]
 
 [tool.poetry.dependencies]
-python = ">=3.8,<=3.13"
-transformers = "^4.0.0" 
-sentence-transformers = ">=2.2.0,<3.0.0" 
-simpledorff = "*"
-pandas = "*"  # Specify a version if known; adjust as necessary
-numpy = "*"   # Specify a version if known; adjust as necessary
-matplotlib = "*"
-seaborn = "*"  # Specify a version if known; adjust as necessary
-openai = "*"
-sentencepiece = "^0.2.0"
-torch = ">=1.11.0,<2.0.0"  # Specify a version range
+python = ">=3.8,<3.11"
+transformers = "^4.35.0"
+sentence-transformers = "^2.2.2"
+simpledorff = "0.0.2"
+pandas = "^1.5.3"
+numpy = "^1.22.0"
+matplotlib = "^3.7.2"
+seaborn = "^0.12.2"
+openai = "^0.27.8"
+sentencepiece = "^0.1.99"
+torch = "^1.13.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"

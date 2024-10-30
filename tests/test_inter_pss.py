@@ -2,6 +2,8 @@ import os
 import pandas as pd
 from promptstability.core import PromptStabilityAnalysis, get_openai_api_key
 from openai import OpenAI
+import pytest
+
 
 # Initialize OpenAI client
 client = OpenAI(api_key=get_openai_api_key())
@@ -35,13 +37,14 @@ test_data = [
 # Initialize PromptStabilityAnalysis with the test annotation function and data
 psa = PromptStabilityAnalysis(annotation_function=annotation_function, data=test_data)
 
+@pytest.mark.requires_api_key 
 def test_inter_pss():
     """Test the inter_pss function (between-prompt stability) with iterative CSV output."""
     original_text = "This is a political statement about healthcare."
     prompt_postfix = "Answer 1 if related; 0 if not related."
     temperatures = [0.1, 0.5, 1.0]  # Adjust as needed
     nr_variations = 5
-    iterations = 3  # Use a lower value for faster testing
+    iterations = 10  # Use a lower value for faster testing
     bootstrap_samples = 50  # Use a lower value for faster testing
 
     all_annotations = []  # Collect all annotations here for CSV writing

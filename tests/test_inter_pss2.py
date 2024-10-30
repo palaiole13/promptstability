@@ -22,7 +22,7 @@ def test_inter_pss():
     prompt_postfix = "Answer 1 if related; 0 if not related."
     temperatures = [0.1, 0.5]
     nr_variations = 3
-    iterations = 2
+    iterations = 20
     bootstrap_samples = 10  # For testing purposes
 
     # Run inter_pss
