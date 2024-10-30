@@ -2,15 +2,15 @@
 __pycache__/
 *.py[cod]
 
-# Distribution / packaging
-build/
-dist/
-*.egg-info/
-
 # Virtual environment directories
 env/
 venv/
 testenv/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
 
 # Pytest cache
 .pytest_cache/
@@ -18,7 +18,7 @@ testenv/
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 
-# Environment variables file
+# Environment variables
 .env
 
 # IDE or editor directories and files
