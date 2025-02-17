@@ -28,7 +28,7 @@ pandas = "^1.5.3"
 numpy = "^1.22.0"
 matplotlib = "^3.7.2"
 seaborn = "^0.12.2"
-openai = "^0.27.8"
+openai = "^1.63.0"
 sentencepiece = "^0.1.99"
 torch = "^1.13.1"
 
