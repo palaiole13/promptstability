@@ -14,13 +14,6 @@ Package for generating Prompt Stability Scores (PSS). See paper [here](https://w
 
 ## Installation
 
-### TestPypi installation
-Install this library using `pip`:
-```bash
-pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple promptstability
-```
-
-### Pypi installation (pending upload)
 Install this library using `pip`:
 ```bash
 pip install promptstability
@@ -98,8 +91,8 @@ import ollama
 MODEL = 'llama3'
 def annotate(text, prompt, temperature=0.1):
     response = ollama.chat(model=MODEL, messages=[
-        {"role": "system", "content": f"'{prompt}'"},  
-        {"role": "user", "content": f"'{text}'"}  
+        {"role": "system", "content": f"'{prompt}'"},
+        {"role": "user", "content": f"'{text}'"}
     ])
 return response['message']['content']
 ```
