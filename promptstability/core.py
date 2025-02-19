@@ -32,7 +32,7 @@ class PromptStabilityAnalysis:
         model_name = 'tuner007/pegasus_paraphrase'
         self.torch_device = 'cuda' if torch.cuda.is_available() else 'cpu'
         self.tokenizer = PegasusTokenizer.from_pretrained(model_name)
-        self.parse_function = parse_function
+        self.parse_function = parse_function if parse_function is not None else lambda x: x  # Default parse function
         self.model = PegasusForConditionalGeneration.from_pretrained(model_name).to(self.torch_device)
         self.data = data
         self.metric_fn = metric_fn
@@ -64,7 +64,7 @@ class PromptStabilityAnalysis:
             annotations = []
 
             for j, d in enumerate(self.data):
-                annotation = self.annotation_function(d, prompt)
+                annotation = self.parse_function(self.annotation_function(d, prompt))
                 annotations.append({'id': j, 'text': d, 'annotation': annotation, 'iteration': i})
 
             all_annotations.extend(annotations)  # Extend the list with the current iteration's annotations
@@ -128,7 +128,7 @@ class PromptStabilityAnalysis:
                     print(f"Temperature {temp}, Iteration {i+1}/{iterations}", end='\r')
                     sys.stdout.flush()
                     for k, d in enumerate(self.data):
-                        annotation = self.annotation_function(d, paraphrase)
+                        annotation = self.parse_function(self.annotation_function(d, paraphrase))
                         annotated.append({'id': k, 'text': d, 'annotation': annotation, 'prompt_id': j, 'prompt': paraphrase, 'original': original, 'temperature': temp})
 
                 end_time = time.time()  #
@@ -219,7 +219,7 @@ class PromptStabilityAnalysis:
                 prompt_id = prompt_entry['prompt_id']
 
                 for k, d in enumerate(self.data):
-                    annotation = self.annotation_function(d, prompt)
+                    annotation = self.parse_function(self.annotation_function(d, prompt))
                     annotated.append({
                         'id': k,
                         'text': d,
