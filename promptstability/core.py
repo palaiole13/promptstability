@@ -71,7 +71,8 @@ class PromptStabilityAnalysis:
 
         all_annotated = pd.DataFrame(all_annotations)  # Convert list to DataFrame once
 
-        for i in range(1, iterations):  # Start calculating Krippendorff's Alpha after collecting more than one set of annotations
+        # Calculate Krippendorff's Alpha after collecting >1 set of annotations
+        for i in range(1, iterations):
             annotator_col = 'iteration'
             mean_alpha, (ci_lower, ci_upper) = self.bootstrap_krippendorff(all_annotated[all_annotated['iteration'] <= i], annotator_col, bootstrap_samples)
             ka_scores[i] = {'Average Alpha': mean_alpha, 'CI Lower': ci_lower, 'CI Upper': ci_upper}
