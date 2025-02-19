@@ -5,7 +5,8 @@ from openai import OpenAI
 import pytest
 
 # Initialize OpenAI client
-client = OpenAI(api_key=get_openai_api_key())
+APIKEY = get_openai_api_key()
+client = OpenAI(api_key=APIKEY)
 
 # Define the annotation function with the specified API call structure
 def annotation_function(text, prompt, temperature=0.1):
@@ -36,7 +37,7 @@ test_data = [
 # Initialize PromptStabilityAnalysis with the test annotation function and data
 psa = PromptStabilityAnalysis(annotation_function=annotation_function, data=test_data)
 
-@pytest.mark.requires_api_key 
+@pytest.mark.requires_api_key
 def test_intra_pss():
     """Test the intra_pss function (within-prompt stability) with iterative CSV output."""
     original_text = "This is a prompt about the quick brown fox."
@@ -49,7 +50,7 @@ def test_intra_pss():
     # Step 1: Run all iterations to collect annotations
     for i in range(iterations):
         print(f"Running iteration {i+1} of {iterations}...")
-        
+
         # Annotate each text item without KA calculation
         for j, text in enumerate(test_data):
             annotation = annotation_function(text, f"{original_text} {prompt_postfix}")

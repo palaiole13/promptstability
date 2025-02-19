@@ -29,27 +29,17 @@ from promptstability.core import PromptStabilityAnalysis
 from promptstability.core import load_example_data
 
 import os
-print("OPENAI_API_KEY:", os.environ.get('OPENAI_API_KEY'))
 
 #This script mimics a user run-through of package use
 
 # Load data
 df = load_example_data()
 print(df.head())
-
-# Take a subsample
-example_data = list(df['body'].values)
+example_data = list(df['body'].values) # Take a subsample
 
 # Initialize OpenAI client
-client = OpenAI(api_key=get_openai_api_key()) #Will get an error if no API key set as environment variable
-
-# Enter in terminal: export OPENAI_API_KEY='your-api-key-here'
-# OR (not advised) hard code it with:
-
-os.environ['OPENAI_API_KEY'] = 'your-api-key-here'
-
-# Initialize OpenAI client
-client = OpenAI(api_key=get_openai_api_key())
+APIKEY = get_openai_api_key() # Will get an error if no API key set as environment variable
+client = OpenAI(api_key=APIKEY)
 
 # Define the annotation function
 def annotate(text, prompt, temperature=0.1):

@@ -6,7 +6,8 @@ import pytest
 
 
 # Initialize OpenAI client
-client = OpenAI(api_key=get_openai_api_key())
+APIKEY = get_openai_api_key()
+client = OpenAI(api_key=APIKEY)
 
 # Define the annotation function with the specified API call structure
 def annotation_function(text, prompt, temperature=0.1):
@@ -37,7 +38,7 @@ test_data = [
 # Initialize PromptStabilityAnalysis with the test annotation function and data
 psa = PromptStabilityAnalysis(annotation_function=annotation_function, data=test_data)
 
-@pytest.mark.requires_api_key 
+@pytest.mark.requires_api_key
 def test_inter_pss():
     """Test the inter_pss function (between-prompt stability) with iterative CSV output."""
     original_text = "This is a political statement about healthcare."
@@ -52,17 +53,17 @@ def test_inter_pss():
     # Step 1: Run all temperatures and iterations to collect annotations
     for temp in temperatures:
         print(f"Running annotations for temperature {temp}...")
-        
+
         for i in range(iterations):
             print(f"Iteration {i+1} of {iterations} for temperature {temp}...")
-            
+
             # Generate paraphrased prompts for each temperature
             paraphrases = psa._PromptStabilityAnalysis__generate_paraphrases(original_text, prompt_postfix, nr_variations, temperature=temp)
-            
+
             # Annotate each paraphrased prompt without KA calculation
             for j, row in paraphrases.iterrows():
                 paraphrased_prompt = row['phrase']
-                
+
                 for k, text in enumerate(test_data):
                     annotation = annotation_function(text, paraphrased_prompt, temperature=temp)
                     all_annotations.append({

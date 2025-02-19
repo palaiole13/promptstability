@@ -17,15 +17,8 @@ print(df.head())
 example_data = list(df['body'].values)
 
 # Initialize OpenAI client
-client = OpenAI(api_key=get_openai_api_key()) #Will get an error if no API key set as environment variable
-
-# Enter in terminal: export OPENAI_API_KEY='your-api-key-here'
-# OR (not advised) hard code it with:
-
-os.environ['OPENAI_API_KEY'] = 'your-api-key-here'
-
-# Initialize OpenAI client
-client = OpenAI(api_key=get_openai_api_key())
+APIKEY = get_openai_api_key()
+client = OpenAI(api_key=APIKEY)
 
 # Define the annotation function
 def annotate(text, prompt, temperature=0.1):
