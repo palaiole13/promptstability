@@ -30,15 +30,17 @@ from promptstability.core import load_example_data
 
 import os
 
-#This script mimics a user run-through of package use
+# This script mimics a user run-through of package use
 
 # Load data
 df = load_example_data()
 print(df.head())
 example_data = list(df['body'].values) # Take a subsample
 
+# In terminal: export OPENAI_API_KEY="your-api-key-here")
+
 # Initialize OpenAI client
-APIKEY = get_openai_api_key() # Will get an error if no API key set as environment variable
+APIKEY = get_openai_api_key()
 client = OpenAI(api_key=APIKEY)
 
 # Define the annotation function
