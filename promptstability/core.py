@@ -33,8 +33,7 @@ class PromptStabilityAnalysis:
         self.torch_device = 'cuda' if torch.cuda.is_available() else 'cpu'
         self.tokenizer = PegasusTokenizer.from_pretrained(model_name)
         self.parse_function = parse_function if parse_function is not None else lambda x: x  # Default parse function
-        #self.model = PegasusForConditionalGeneration.from_pretrained(model_name).to(self.torch_device)
-        self.model = PegasusForConditionalGeneration.from_pretrained(model_name, ignore_mismatched_sizes=True).to(self.torch_device)
+        self.model = PegasusForConditionalGeneration.from_pretrained(model_name).to(self.torch_device)
         self.data = data
         self.metric_fn = metric_fn
 
