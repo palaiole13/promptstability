@@ -92,6 +92,7 @@ class PromptStabilityAnalysis:
             If True, plot the KA scores (default: False).
         save_path : str, optional
             File path to save the plot (default: None).
+            Parameter plot should be set to True if plot is to be saved.
         save_csv : str, optional
             File path to save the annotated data as a CSV file (default: None).
 
