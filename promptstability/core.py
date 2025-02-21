@@ -27,6 +27,25 @@ def get_openai_api_key():
 class PromptStabilityAnalysis:
 
     def __init__(self, annotation_function, data, metric_fn=simpledorff.metrics.nominal_metric, parse_function=None) -> None:
+        """
+        Initialize a PromptStabilityAnalysis instance.
+
+        Sets up models and functions for generating paraphrases and evaluating intra- and inter-prompt stability
+        via annotation agreement (Krippendorff's Alpha).
+
+        Parameters
+        ----------
+        annotation_function : callable
+            A function that takes a text and a prompt and returns an annotation.
+        data : list
+            A list of text items to be annotated.
+        metric_fn : callable, optional
+            Function to compute the agreement metric (default: simpledorff.metrics.nominal_metric).
+            The default nominal metric (metric_fn=simpledorff.metrics.nominal_metric) should be used when annotations are categorical, with no inherent ordering.
+            If annotations are ordinal or numerical, the alternative interval metric should be used (metric_fn=simpledorff.metrics.interval_metric).
+        parse_function : callable, optional
+            Function to post-process the raw output of the annotation_function. If None, the default raw output is used (default: lambda x: x).
+        """
         self.annotation_function = annotation_function
         self.embedding_model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
         model_name = 'tuner007/pegasus_paraphrase'
@@ -51,7 +70,38 @@ class PromptStabilityAnalysis:
         self.paraphrases = pd.DataFrame(l)
         return self.paraphrases
 
-    def intra_pss(self, original_text, prompt_postfix, iterations=10, bootstrap_samples=1000, plot=False, save_path=None, save_csv=None):
+    def intra_pss(self, original_text, prompt_postfix=None, iterations=10, bootstrap_samples=1000, plot=False, save_path=None, save_csv=None):
+        """
+        Evaluate prompt stability within a single prompt context via repeated annotation (intra-PSS).
+
+        This method takes the original prompt (original_text plus prompt_postfix) and repeatedly classifies the same n rows of data.
+        For each iteration, this method then calculates a cumulative reliability score (Krippendorff’s Alpha (KA)), using
+        bootstrapping to estimate agreement and its confidence intervals. This is the intra-prompt stability score or intra-PSS.
+
+        Parameters
+        ----------
+        original_text : str
+            The base text of the prompt.
+        prompt_postfix : str, optional
+            Additional text appended to specify the type of output required (e.g., binary, interval). (default: None).
+        iterations : int, optional
+            Number of annotation iterations (default: 10).
+        bootstrap_samples : int, optional
+            Number of bootstrap samples for estimating confidence intervals (default: 1000).
+        plot : bool, optional
+            If True, plot the KA scores (default: False).
+        save_path : str, optional
+            File path to save the plot (default: None).
+        save_csv : str, optional
+            File path to save the annotated data as a CSV file (default: None).
+
+        Returns
+        -------
+        tuple
+            A tuple containing:
+            - A dictionary of cumulative KA scores per iteration.
+            - A pandas.DataFrame of the annotated data and corresponding KA metrics.
+        """
         prompt = f'{original_text} {prompt_postfix}'
         all_annotations = []  # Use a list to collect all annotations
 
@@ -114,7 +164,49 @@ class PromptStabilityAnalysis:
 
         return ka_scores, all_annotated
 
-    def inter_pss(self, original_text, prompt_postfix=None, nr_variations=5, temperatures=[0.5, 0.7, 0.9], iterations=1, bootstrap_samples=1000, print_prompts=False, edit_prompts_path=None, plot=False, save_path=None, save_csv=None):
+    def inter_pss(self, original_text, prompt_postfix=None, nr_variations=5, temperatures=[0.1, 2.5, 5.0], iterations=1, bootstrap_samples=1000, print_prompts=False, edit_prompts_path=None, plot=False, save_path=None, save_csv=None):
+        """
+        Evaluate prompt stability across semantically similar prompts (inter-PSS).
+
+        This method uses PEGASUS to generate multiple paraphrases of the original prompt,
+        and the temperature feature to control the degree of similarity between these prompts
+        (the higher the temperature, the larger the semantic distance between the original prompts and the genarated paraphrases).
+        For each temperature setting, this method then computes Krippendorff's Alpha (with bootstrapping) to assess
+        annotation agreement. This is the inter-prompt stability score or inter-PSS.
+
+        Parameters
+        ----------
+        original_text : str
+            The base text of the prompt.
+        prompt_postfix : str, optional
+            Additional text appended to specify the type of output required (e.g., binary, interval).
+            This string  does not get paraphrased - i.e. remains constant across all variations (default: None).
+        nr_variations : int, optional
+            Number of paraphrase variations to generate per temperature (default: 5).
+        temperatures : list, optional
+            A list of temperature values for paraphrase generation (default: [0.1, 2.5, 5.0]).
+        iterations : int, optional
+            Number of annotation iterations per temperature (default: 1).
+        bootstrap_samples : int, optional
+            Number of bootstrap samples for estimating Krippendorff's Alpha (default: 1000).
+        print_prompts : bool, optional
+            If True, print the unique generated prompts (default: False).
+        edit_prompts_path : str, optional
+            File path to save the prompts for manual editing, to be used in the manual_inter_pss method (default: None).
+        plot : bool, optional
+            If True, plot the KA scores (default: False).
+        save_path : str, optional
+            File path to save the plot (default: None).
+        save_csv : str, optional
+            File path to save the annotated data as CSV (default: None).
+
+        Returns
+        -------
+        tuple
+            A tuple containing:
+            - A dictionary of KA scores for each temperature.
+            - A combined pandas.DataFrame of all annotated data.
+        """
         ka_scores = {}
         all_annotated = []
 
@@ -198,7 +290,31 @@ class PromptStabilityAnalysis:
 
         return ka_scores, combined_annotated_data
 
-    def manual_interprompt_stochasticity(self, edit_prompts_path, bootstrap_samples=1000, plot=False, save_path=None, save_csv=None):
+    def manual_inter_pss(self, edit_prompts_path, bootstrap_samples=1000, plot=False, save_path=None, save_csv=None):
+        """
+        Evaluate prompt stability across semantically similar prompts (inter-PSS).
+        The only difference from inter_pss is that prompts here are manually edited (rather than automatically generated).
+
+        Parameters
+        ----------
+        edit_prompts_path : str
+            Path to the CSV file containing the manually edited prompts. This could be the same as the edit_prompts_path in the inter_pss method.
+        bootstrap_samples : int, optional
+            Number of bootstrap samples to use for estimating Krippendorff's Alpha (default is 1000).
+        plot : bool, optional
+            If True, plots the Krippendorff's Alpha scores (default is False).
+        save_path : str, optional
+            File path to save the plot (default is None).
+        save_csv : str, optional
+            File path to save the combined annotated data as CSV (default is None).
+
+        Returns
+        -------
+        tuple
+            A tuple containing:
+            - A dictionary of Krippendorff's Alpha scores for each temperature.
+            - A pandas.DataFrame of the combined annotated data.
+        """
         # Load the manually edited prompts CSV
         prompts_df = pd.read_csv(edit_prompts_path)
 
@@ -284,6 +400,30 @@ class PromptStabilityAnalysis:
         return ka_scores, combined_annotated_data
 
     def bootstrap_krippendorff(self, df, annotator_col, bootstrap_samples, confidence_level=95):
+        """
+        Compute Krippendorff's Alpha using bootstrapping.
+
+        This method resamples the provided DataFrame with replacement to generate a distribution
+        of Krippendorff's Alpha values, from which the mean and confidence intervals are computed.
+
+        Parameters
+        ----------
+        df : pandas.DataFrame
+            DataFrame containing annotation data.
+        annotator_col : str
+            Name of the column identifying the annotator (or iteration) in the DataFrame.
+        bootstrap_samples : int
+            Number of bootstrap resampling iterations.
+        confidence_level : int, optional
+            Confidence level for the computed interval (default: 95).
+
+        Returns
+        -------
+        tuple
+            A tuple (mean_alpha, (ci_lower, ci_upper)) where:
+            - mean_alpha is the mean Krippendorff's Alpha over bootstrap samples.
+            - ci_lower and ci_upper are the lower and upper bounds of the confidence interval.
+        """
         alpha_scores = []
 
         for _ in range(bootstrap_samples):  # Number of bootstrap samples
