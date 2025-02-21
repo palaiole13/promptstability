@@ -119,7 +119,7 @@ def annotate_ollama(text, prompt, temperature=0.1):
 psa_ollama = PromptStabilityAnalysis(annotation_function=annotate_ollama, data=example_data)
 
 # Run intra-prompt stability analysis using the method `intra_pss`
-print("Running Ollama intra-prompt (baseline) analysis...")
+print("Running Ollama intra-prompt analysis...")
 ka_ollama_intra, annotated_ollama_intra = psa_ollama.intra_pss(
     original_text,
     prompt_postfix,
