@@ -65,7 +65,7 @@ def annotate_openai(text, prompt, temperature=0.1):
 
     return ''.join(choice.message.content for choice in response.choices)
 
-# Instantiate the analysis class using OpenAI’s annotation function
+# Instantiate the analysis class using OpenAI’s annotation function (Note on warnings: Pegasus comes with automated warning about model weights, which you can ignore)
 psa_openai = PromptStabilityAnalysis(annotation_function=annotate_openai, data=example_data)
 
 # Run intra-prompt stability analysis using the method `intra_pss`
@@ -115,7 +115,7 @@ def annotate_ollama(text, prompt, temperature=0.1):
         raise e
     return response['message']['content']
 
-# Instantiate the analysis class using Ollama’s annotation function
+# Instantiate the analysis class using Ollama’s annotation function (Note on warnings: Pegasus comes with automated warning about model weights, which you can ignore)
 psa_ollama = PromptStabilityAnalysis(annotation_function=annotate_ollama, data=example_data)
 
 # Run intra-prompt stability analysis using the method `intra_pss`
