@@ -23,6 +23,40 @@ def get_openai_api_key():
         raise ValueError("API key not found. Please set the OPENAI_API_KEY environment variable.")
     return api_key
 
+def get_api_key(api: str = "openai") -> str:
+    """
+    Retrieve the API key for the specified service from environment variables.
+
+    Parameters
+    ----------
+    api : str, optional
+        The name of the API service (e.g., "openai", "mistral"). (default: "openai").
+
+    Returns
+    -------
+    str
+        The API key retrieved from the corresponding environment variable.
+
+    Raises
+    ------
+    ValueError
+        If the API key is not found or if the API service is unsupported.
+    """
+    env_var_map = {
+        "openai": "OPENAI_API_KEY",
+        "mistral": "MISTRAL_API_KEY",
+        # You can add additional mappings as needed.
+    }
+
+    key_name = env_var_map.get(api.lower())
+    if not key_name:
+        raise ValueError(f"Unsupported API: {api}. Supported APIs: {list(env_var_map.keys())}")
+
+    api_key = os.getenv(key_name)
+    if not api_key:
+        raise ValueError(f"API key not found. Please set the {key_name} environment variable.")
+
+    return api_key
 
 class PromptStabilityAnalysis:
 
