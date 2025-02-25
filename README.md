@@ -23,7 +23,7 @@ Here we provide instructions for using `promptstability` with OpenAI and Ollama.
 
 ``` python
 import pandas as pd
-from promptstability.core import get_openai_api_key
+from promptstability.core import get_api_key
 from promptstability.core import PromptStabilityAnalysis
 from promptstability.core import load_example_data
 import os
@@ -42,8 +42,8 @@ prompt_postfix = 'Respond 0 for positive news, or 1 for negative news. Guess if 
 from openai import OpenAI
 
 # Initialize OpenAI client
-# In terminal: export OPENAI_API_KEY="your-api-key-here")
-APIKEY = get_openai_api_key()
+# First set the OPENAI_API_KEY environment variable
+APIKEY = get_api_key('openai')
 client = OpenAI(api_key=APIKEY)
 
 OPENAI_MODEL = 'gpt-4o-mini'
