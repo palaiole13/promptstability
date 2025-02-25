@@ -1,11 +1,11 @@
 import os
 import pandas as pd
-from promptstability.core import PromptStabilityAnalysis, get_openai_api_key
+from promptstability.core import PromptStabilityAnalysis, get_api_key
 from openai import OpenAI
 import pytest
 
 # Initialize OpenAI client
-APIKEY = get_openai_api_key()
+APIKEY = get_api_key()
 client = OpenAI(api_key=APIKEY)
 
 # Define the annotation function with the specified API call structure

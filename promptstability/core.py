@@ -16,13 +16,6 @@ def load_example_data():
     with importlib.resources.open_text("promptstability.data", "example_data.csv") as f:
         return pd.read_csv(f)
 
-def get_openai_api_key():
-    """Retrieve OpenAI API key from environment variables."""
-    api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key:
-        raise ValueError("API key not found. Please set the OPENAI_API_KEY environment variable.")
-    return api_key
-
 def get_api_key(api: str = "openai") -> str:
     """
     Retrieve the API key for the specified service from environment variables.
@@ -43,10 +36,12 @@ def get_api_key(api: str = "openai") -> str:
         If the API key is not found or if the API service is unsupported.
     """
     env_var_map = {
-        "openai": "OPENAI_API_KEY",
-        "mistral": "MISTRAL_API_KEY",
-        # You can add additional mappings as needed.
-    }
+    "openai": "OPENAI_API_KEY",           # For OpenAI's GPT models (e.g., GPT-3.5, GPT-4)
+    "mistral": "MISTRAL_API_KEY",         # For Mistral's models
+    "anthropic": "ANTHROPIC_API_KEY",     # For Anthropic's Claude models
+    "cohere": "COHERE_API_KEY",           # For Cohere's language models
+    "huggingface": "HUGGINGFACE_API_KEY" # For accessing models via Hugging Face's Inference API (sometimes called HUGGINGFACE_HUB_TOKEN)
+}
 
     key_name = env_var_map.get(api.lower())
     if not key_name:

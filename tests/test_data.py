@@ -1,3 +1,4 @@
+import pytest
 import pandas as pd
 from promptstability import load_example_data
 

@@ -1,6 +1,6 @@
 from openai import OpenAI
 import pandas as pd
-from promptstability.core import get_openai_api_key
+from promptstability.core import get_api_key
 from promptstability.core import PromptStabilityAnalysis
 from promptstability.core import load_example_data
 
@@ -17,7 +17,7 @@ print(df.head())
 example_data = list(df['body'].values)
 
 # Initialize OpenAI client
-APIKEY = get_openai_api_key()
+APIKEY = get_api_key()
 client = OpenAI(api_key=APIKEY)
 
 # Define the annotation function
