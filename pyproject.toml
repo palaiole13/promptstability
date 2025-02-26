@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "promptstability"
-version = "0.1.3"
+version = "0.1.4"
 description = "Package for generating Prompt Stability Score (PSS). PSS estimates the stability of outcomes resulting from variations in language model prompt specifications."
 authors = ["Christopher Barrie, Elli Palaiologou, Petter Törnberg"]
 license = "Apache-2.0"
