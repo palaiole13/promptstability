@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'Prompt Stability Scores (PSS)'
+project = 'Prompt Stability Score (PSS)'
 copyright = '2025, Christopher Barrie, Elli Palaiologou, Petter Törnberg'
 author = 'Christopher Barrie, Elli Palaiologou, Petter Törnberg'
 
