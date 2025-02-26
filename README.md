@@ -7,6 +7,14 @@
 
 Package for generating Prompt Stability Scores (PSS). See paper [here](https://www.arxiv.org/abs/2407.02039) outlining technique for investigating the stability of outcomes resulting from variations in language model prompt specifications. Replication material [here](https://github.com/cjbarrie/promptstability/tree/main).
 
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Example Usage](#example-usage)
+- [API Documentation](#api-documentation)
+- [Development](#development)
+
 ## Requirements
 
 - **Python 3.8 to 3.10** (Python 3.11 and above are not supported due to dependency limitations)
@@ -141,6 +149,14 @@ ka_ollama_inter, annotated_ollama_inter = psa_ollama.inter_pss(
 )
 print("Ollama inter-prompt KA scores:", ka_ollama_inter)
 ```
+## API Documentation
+Our full API reference documentation is hosted on Read the Docs and includes detailed information on all modules, classes, and functions.
+
+You can access the documentation here:
+
+[PromptStability API Documentation](https://promptstability.readthedocs.io)
+
+*This documentation is automatically updated whenever changes are pushed to the repository.*
 
 ## Development
 
