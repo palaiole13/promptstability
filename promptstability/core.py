@@ -23,7 +23,8 @@ def get_api_key(api: str = "openai") -> str:
     Parameters
     ----------
     api : str, optional
-        The name of the API service (e.g., "openai", "mistral"). (default: "openai").
+        The name of the API service.
+        Options: 'openai', 'mistral', 'anthropic', 'cohere', 'huggingface' (default: "openai").
 
     Returns
     -------
